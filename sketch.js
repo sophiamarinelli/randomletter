@@ -20,12 +20,14 @@ function draw() {
     background(255);
     letterA();
     letterB();
+
     letterA2();
     letterB2();
     letterA3();
     letterB3();
     letterA4();
     letterB4();
+    letterC();
 }
 
 function letterA() {
@@ -52,6 +54,7 @@ function letterB() {
     line(random(142, 142 + px), random(156, 156 + py), random(31, 31 + px), random(175, 175 + py));
     line(random(31, 31 + px), random(99, 99 + py), random(117, 117 + px), random(99, 99 + py));
 }
+
 
 function letterA2() {
     strokeWeight(20);
@@ -127,4 +130,11 @@ function letterB4() {
     line(random(117, 117 + px4), random(99, 99 + py4), random(142, 142 + px4), random(156, 156 + py4));
     line(random(142, 142 + px4), random(156, 156 + py4), random(31, 31 + px4), random(175, 175 + py4));
     line(random(31, 31 + px4), random(99, 99 + py4), random(117, 117 + px4), random(99, 99 + py4));
+}
+
+function letterC() {
+    strokeWeight(20);
+    noFill();
+    translate(300, 0);
+    line(random(145, 145 + px), random(151, 151 + px), random(91, 91 + px), random(186, 186 + px));
 }
