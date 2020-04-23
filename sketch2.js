@@ -1,5 +1,5 @@
 function setup() {
-    createCanvas(1920, 1080);
+    createCanvas(3500, 1080);
 
 
 
@@ -9,7 +9,7 @@ function draw() {
     background(255)
     strokeWeight(20);
     strokeCap(SQUARE);
-    scale(.6)
+    scale(.6);
     drawLetter1(letterA, { x: 0, y: 0 });
     drawLetter1(letterB, { x: 200, y: 0 });
     drawLetter1(letterC, { x: 200, y: 0 });
