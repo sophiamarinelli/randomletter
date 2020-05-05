@@ -1,53 +1,8 @@
-function setup() {
-    createCanvas(3500, 1080);
-
-
-
-}
-
-function draw() {
-    background(255)
-    strokeWeight(20);
-    strokeCap(SQUARE);
-    scale(.6);
-    drawLetter1(letterA, { x: 0, y: 0 });
-    drawLetter1(letterB, { x: 200, y: 0 });
-    drawLetter1(letterC, { x: 200, y: 0 });
-    drawLetter1(letterD, { x: 200, y: 0 });
-    drawLetter1(letterE, { x: 200, y: 0 });
-    drawLetter1(letterF, { x: 200, y: 0 });
-    drawLetter1(letterG, { x: 200, y: 0 });
-    drawLetter1(letterH, { x: 200, y: 0 });
-    drawLetter1(letterI, { x: 200, y: 0 });
-    drawLetter1(letterJ, { x: 200, y: 0 });
-    drawLetter1(letterK, { x: 200, y: 0 });
-    drawLetter1(letterL, { x: 200, y: 0 });
-    drawLetter1(letterM, { x: 200, y: 0 });
-    drawLetter1(letterN, { x: 200, y: 0 });
-    drawLetter1(letterO, { x: 200, y: 0 });
-    drawLetter1(letterP, { x: 200, y: 0 });
-    drawLetter1(letterQ, { x: 200, y: 0 });
-    drawLetter1(letterR, { x: 200, y: 0 });
-    drawLetter1(letterS, { x: 200, y: 0 });
-    drawLetter1(letterT, { x: 200, y: 0 });
-    drawLetter1(letterU, { x: 200, y: 0 });
-    drawLetter1(letterV, { x: 200, y: 0 });
-    drawLetter1(letterW, { x: 200, y: 0 });
-    drawLetter1(letterX, { x: 200, y: 0 });
-    drawLetter1(letterY, { x: 200, y: 0 });
-    drawLetter1(letterZ, { x: 200, y: 0 });
-
-
-    frameRate(5)
-    // noFill()
-    // drawEllipse(letterA, { x: 50, y: 100 });
-    // drawEllipse(letterB, { x: 200, y: 0 });
-    // drawEllipse(letterC, { x: 200, y: 0 });
-    // drawEllipse(letterD, { x: 200, y: 0 });
-    // drawEllipse(letterE, { x: 200, y: 0 });
-    // drawEllipse(letterF, { x: 200, y: 0 });
-    // drawEllipse(letterG, { x: 200, y: 0 });
-}
+let url = 'https://api.nytimes.com/svc/topstories/v2/home.json?api-key=jDPUpEMnGTlRk4AHmcaoYUeH47i4AiOu';
+let urlRange = "https://pomber.github.io/covid19/timeseries.json"
+let data
+let article
+let range = 5
 
 const letterA = {
     lines: [
@@ -280,28 +235,133 @@ const letterZ = {
     ]
 }
 
-
-
-function drawLetter1(letter, translation) {
-    let range = mouseY / 10
-    translate(translation.x, translation.y)
-    for (let i = 0; i < letter.lines.length; i++) {
-        const { x1, y1, x2, y2 } = letter.lines[i];
-        line(random(x1 - (range / 2), x1 + (range / 2)), random(y1 - (range / 2), y1 + (range / 2)), random(x2 - (range / 2), x2 + (range / 2)), random(y2 - (range / 2), y2 + (range / 2)));
-
-    }
+const allLetters = {
+    A: letterA,
+    B: letterB,
+    C: letterC,
+    D: letterD,
+    E: letterE,
+    F: letterF,
+    G: letterG,
+    H: letterH,
+    I: letterI,
+    J: letterJ,
+    K: letterK,
+    L: letterL,
+    M: letterM,
+    N: letterN,
+    O: letterO,
+    P: letterP,
+    Q: letterQ,
+    R: letterR,
+    S: letterS,
+    T: letterT,
+    U: letterU,
+    V: letterV,
+    W: letterW,
+    X: letterX,
+    Y: letterY,
+    Z: letterZ
 }
 
-function drawEllipse(letter, translation) {
-    let rangex = 20
-    let rangey = 20
-    translate(translation.x, translation.y)
-    for (let i = 0; i < letter.lines.length; i++) {
-        const { x1, y1, x2, y2 } = letter.lines[i];
-        ellipse(random(x1, x1 + rangex), random(y1, y1 + rangey), random(x2 - x1, x2 - x1 + rangex), random(y2 - y1, y2 - y1 + rangey));
-        ellipse(random(x2, x2 + rangex), random(y2, y2 + rangey), random(x2 - x1, x2 - x1 + rangex), random(y2 - y1, y2 - y1 + rangey));
-        // ellipse(x2, y2, random(x2 - x1, x2 - x1 + rangex), random(y2 - y1, y2 - y1 + rangey));
 
+function setup() {
+    let canvas = createCanvas(3000, 3000)
+    data = loadJSON(url);
+    dataRange = loadJSON(urlRange);
+    console.log(dataRange)
+
+    button = createButton('Confirmed Cases');
+    button.addClass('button');
+    buttonTwo = createButton('Deaths');
+    buttonTwo.addClass('button');
+    buttonThree = createButton('Reset')
+    buttonThree.addClass('button');
+    buttonFour = createButton('Active Cases');
+    buttonFour.addClass('button');
+
+
+}
+
+function confirmed() {
+    let confirmed = dataRange["US"][102].confirmed
+    document.getElementById("container").innerHTML = confirmed;
+    console.log(confirmed)
+    range = confirmed / 1000
+}
+
+function deaths() {
+    let deaths = dataRange["US"][102].deaths
+    document.getElementById("container").innerHTML = deaths;
+    console.log(deaths)
+    range = deaths / 1000
+}
+
+function active() {
+    let deaths = dataRange["US"][102].deaths
+    let confirmed = dataRange["US"][102].confirmed
+    let recovered = dataRange["US"][102].recovered
+    let active = confirmed - deaths - recovered
+    document.getElementById("container").innerHTML = active;
+    range = active / 1000
+    console.log(active)
+}
+
+function reset() {
+    document.getElementById("container").innerHTML = "";
+    range = 5
+}
+
+
+
+function draw() {
+
+    if (!data.results) {
+        return
+    }
+    background(255)
+    strokeWeight(20);
+    frameRate(1)
+    strokeCap(SQUARE);
+    button.mousePressed(confirmed);
+    buttonTwo.mousePressed(deaths);
+    buttonThree.mousePressed(reset)
+    buttonFour.mousePressed(active);
+
+    button.position(random(0, 1920), random(0, 1080))
+    buttonTwo.position(random(0, 1920), random(0, 1080))
+    buttonThree.position(random(0, 1920), random(0, 1080))
+    buttonFour.position(random(0, 1920), random(0, 1080))
+    article = data.results[0].title.replace(/ /g, "").replace(/,/g, "").replace(/'/g, "").replace(/""/g, "").replace(/:/g, "").replace(/2/g, "");
+    console.log(article)
+    const letterWidth = 170;
+    const windowWidth = window.innerWidth;
+    let currentLine = 0;
+    let currentX = 0
+    for (let i = 0; i < article.length; i++) {
+
+        const char = article.charAt(i);
+        const uppercaseChar = char.toUpperCase();
+        const letterData = allLetters[uppercaseChar];
+
+        if (letterWidth * (i % (windowWidth / letterWidth)) >= windowWidth - 200) {
+            currentLine = currentLine + 200
+            currentX = 40
+        }
+
+        drawLetter(letterData, { x: ((i % (windowWidth / letterWidth)) * letterWidth) - currentX, y: currentLine });
+
+    }
+
+
+    function drawLetter(letter, translation) {
+        push();
+        translate(translation.x, translation.y)
+        for (let i = 0; i < letter.lines.length; i++) {
+            const { x1, y1, x2, y2 } = letter.lines[i];
+            line(random(x1, x1 + range), random(y1, y1 + range), random(x2, x2 + range), random(y2, y2 + range));
+        }
+        pop();
 
     }
 }
