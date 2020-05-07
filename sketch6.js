@@ -332,7 +332,7 @@ function draw() {
     buttonTwo.position(random(0, 1920), random(0, 1080))
     buttonThree.position(random(0, 1920), random(0, 1080))
     buttonFour.position(random(0, 1920), random(0, 1080))
-    article = data.results[0].title.replace(/ /g, "").replace(/,/g, "").replace(/'/g, "").replace(/""/g, "").replace(/:/g, "").replace(/2/g, "").replace(/\.$/g, "");
+    article = data.results[0].title.replace(/ /g, "").replace(/,/g, "").replace(/'/g, "").replace(/""/g, "").replace(/:/g, "").replace(/2/g, "").replace(/\./g, "");
     console.log(article)
     const letterWidth = 170;
     const windowWidth = window.innerWidth;
